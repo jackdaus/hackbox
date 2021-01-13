@@ -1,0 +1,24 @@
+<div fxLayout="column" fxLayoutAlign="space-between" class="join-container">
+    <h2>Join a room</h2>
+    
+    <form [formGroup]="joinGameForm" (ngSubmit)="onSubmit()">
+        <div fxLayout="row wrap" fxLayoutGap="20px">
+            <mat-form-field appearance="outline">
+                <mat-label>Name</mat-label>
+                <input required matInput id="name" type="text" formControlName="name">
+            </mat-form-field>
+            
+            <mat-form-field appearance="outline">
+                <mat-label>Room Number</mat-label>
+                <input required matInput id="name" type="text" formControlName="roomCode">
+            </mat-form-field>
+        </div>
+
+        <button mat-stroked-button 
+            color="accent" 
+            type="submit"
+            [disabled]="!joinGameForm.valid">Go!</button>
+    </form>
+
+
+</div>

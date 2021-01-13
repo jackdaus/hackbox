@@ -1,0 +1,24 @@
+<div fxLayout="row" fxLayoutAlign="space-between" class="heading">
+    <h2>Room manager</h2>
+    <button mat-stroked-button (click)="createRoom()">
+        <mat-icon>add</mat-icon>
+        Create Room
+    </button>
+</div>
+
+<mat-card class="room-card" *ngFor="let room of rooms">
+    <div>
+        <p>Room Id: {{ room ? room?.id : 'N/A' }}</p>
+    </div>
+    <div>
+        <p>Game Type: Test</p>
+    </div>
+    <div>
+        Players ({{ room?.players?.length }}/{{ room?.maxPlayers }}):
+        <ul>
+            <li *ngFor="let player of room?.players">
+                {{ player.name }}
+            </li>
+        </ul>
+    </div>
+</mat-card>
