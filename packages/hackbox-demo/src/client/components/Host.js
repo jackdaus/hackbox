@@ -29,7 +29,7 @@ function Host() {
   }
 
   const onClickStartGame = () => {
-    hackbox.startGame({roomId: room.id, gameType});
+    hackbox.startGame(room.id, 'demo');
   };
 
   if (!Object.entries(room).length) {
