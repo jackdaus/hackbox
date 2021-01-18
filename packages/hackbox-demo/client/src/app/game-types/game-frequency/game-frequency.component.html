@@ -1,0 +1,31 @@
+<div fxLayout="column">
+
+  <div class="arc-container">
+    <svg viewBox="0 0 100 50">
+      <defs>
+        <marker id="arrowhead" markerWidth="10" markerHeight="7" 
+        refX="0" refY="3.5" orient="auto">
+          <polygon points="0 0, 10 3.5, 0 7" />
+        </marker>
+      </defs>
+      <circle class="circle" cx="50" cy="50" r="50" fill="lightgray"/>
+      <line 
+        x1="50" 
+        y1="50" 
+        x2="10" 
+        y2="50" 
+        stroke="#000"
+        stroke-width="1" 
+        [attr.transform]="'rotate('+freq+', 50, 50)'"
+        class="smooth-transition"
+        marker-end="url(#arrowhead)"/>
+    </svg>
+    
+  </div>
+
+  <div class="slider-container">
+    <mat-slider fxFlex [(ngModel)]="freq" min="0" max="180" (change)="onSliderChange($event)"></mat-slider>
+  </div>
+  <br>
+  <div>DEBUG: {{freq}}</div>
+</div>

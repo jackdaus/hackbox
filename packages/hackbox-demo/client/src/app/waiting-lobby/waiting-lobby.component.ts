@@ -10,12 +10,7 @@ import { HackboxClientService } from '../shared/hackbox-client.service';
 })
 export class WaitingLobbyComponent implements OnInit {
 
-  roomId: string = '';
   room!: Room; //todo: call getRoom() in constructor so we can remove '!'
-
-  //TEMP
-	gameBegun: boolean = false;
-  gameTypeName: string = '';
   
   constructor(
     private route: ActivatedRoute,
@@ -26,19 +21,16 @@ export class WaitingLobbyComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    //TODO: reconnect to room if re-loading screen
     let roomIdParam = this.route.snapshot.paramMap.get('roomId');
-    this.roomId = roomIdParam ?? '';
+    // ...get room using roomIdParam
 
     this.hackboxClientService.getHackboxClient().onPlayerJoin(room => {
-      console.log('onPlayerJoin run')
       this.room = room;
     })
 
     this.hackboxClientService.getHackboxClient().onStartGame(gameType => {
-      this.gameBegun = true;
-      this.gameTypeName = gameType;
-
-      this.router.navigate([gameType]);
+      this.router.navigate(['game', roomIdParam, gameType]);
     });
     
   }

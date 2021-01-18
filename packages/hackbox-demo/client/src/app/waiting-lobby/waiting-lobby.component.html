@@ -1,5 +1,5 @@
 <div fxLayout="column" fxLayoutAlign="space-around center">
-  <h2>Room: {{ roomId }}</h2>
+  <h2>Room: {{ room?.id }}</h2>
   <h3>Players</h3>
   <ul>
     <li *ngFor="let player of room?.players">{{player.name}}</li>

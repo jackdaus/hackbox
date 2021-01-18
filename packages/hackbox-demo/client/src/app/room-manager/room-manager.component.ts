@@ -40,6 +40,6 @@ export class RoomManagerComponent implements OnInit {
 	}
 
 	startGame(roomId: string): void {
-		this.hackboxClient.startGame(roomId, 'gametypehardcodedfornow');
+		this.hackboxClient.startGame(roomId, 'frequency');
 	}
 }
