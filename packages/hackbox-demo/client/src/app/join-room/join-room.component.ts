@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import { FormControl, FormGroup, Validators} from '@angular/forms';
+import { Router } from '@angular/router';
 
-import { hackboxClient } from 'hackbox-client';
+import { HackboxClientService } from '../shared/hackbox-client.service';
 
 @Component({
 	selector: 'app-join-room',
@@ -13,9 +14,10 @@ export class JoinRoomComponent implements OnInit {
 		name: new FormControl('', Validators.required),
 		roomCode: new FormControl('', Validators.required),
 	});
-	
+
 	constructor(
-		private formBuilder: FormBuilder
+		private router: Router,
+		private hackboxClientService: HackboxClientService,
 	) { } 
 
 	ngOnInit(): void {
@@ -24,9 +26,15 @@ export class JoinRoomComponent implements OnInit {
 	async onSubmit() {
 		const nameInput: string = this.joinGameForm.value['name'];
 		const roomCodeInput: string= this.joinGameForm.value['roomCode'];
-		const hackbox = new hackboxClient('http://localhost:8080');
-		const playerId = await hackbox.joinRoom(roomCodeInput, nameInput);
+		const playerId = await this.hackboxClientService.getHackboxClient().joinRoom(roomCodeInput, nameInput);
 		console.log(playerId)
+		
+		this.router.navigate(['waiting-lobby', roomCodeInput, { name: nameInput }]);
+		
+		this.hackboxClientService.getHackboxClient().onStartGame(gameType => {
+			console.log('game started!')
+		});
+		
 	}
 
 

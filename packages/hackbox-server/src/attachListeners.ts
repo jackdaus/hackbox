@@ -43,6 +43,8 @@ export function attachListeners (io: Server, gameReference: GameReference): void
         io.to(player.socketId).emit('hb-gameStart', gameType);
       });
 
+      //todo: emit hb-gameStart to room-manager room. Would be nice to have the roomId sent as well
+
       setTimeout(() => {
         const players = roomManager.getPlayers(roomId);
 
@@ -52,8 +54,13 @@ export function attachListeners (io: Server, gameReference: GameReference): void
       }, gameReference.demo.gameLength);
     });
 
+    /**
+     * When this endpoint is called, it will add the socket to the game-managment io room. 
+     * The game-managment room receives all updates about all rooms.
+     */
     socket.on('hb-getRooms', () => {
       const rooms = roomManager.getRooms();
+      socket.join('game-management')
       io.to(socket.id).emit('hb-roomsData', rooms);
     });
 
@@ -75,8 +82,14 @@ export function attachListeners (io: Server, gameReference: GameReference): void
       const playerId = generateId();
       const newPlayer = new Player(playerId, socket.id, playerName);
       roomManager.addPlayer(roomId, newPlayer);
+      //Join this user to the game room socket room
+      socket.join(room.socketId);
 
+      //Emit to other players in the game room the updated room
       io.to(room.socketId).emit('hb-onPlayerJoin', room);
+      
+      //send to all room management connections
+      io.to('game-management').emit('hb-onPlayerJoin', room); 
       io.to(socket.id).emit('hb-roomConnectionSuccessful', playerId);
     });
 

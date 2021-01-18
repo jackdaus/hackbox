@@ -15,12 +15,14 @@ import { AppComponent } from './app.component';
 import { JoinRoomComponent } from './join-room/join-room.component';
 import { RoomManagerComponent } from './room-manager/room-manager.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { WaitingLobbyComponent } from './waiting-lobby/waiting-lobby.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     JoinRoomComponent,
     RoomManagerComponent,
+    WaitingLobbyComponent,
   ],
   imports: [
     BrowserModule,

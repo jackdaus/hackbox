@@ -38,4 +38,8 @@ export class RoomManagerComponent implements OnInit {
 		console.log(room)
 		this.rooms.push(room);
 	}
+
+	startGame(roomId: string): void {
+		this.hackboxClient.startGame(roomId, 'gametypehardcodedfornow');
+	}
 }

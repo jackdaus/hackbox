@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "hackbox-wavelength": {
+    "hackbox-demo": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:application": {
@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/hackbox-wavelength",
+            "outputPath": "dist/hackbox-demo",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -66,18 +66,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "hackbox-wavelength:build"
+            "browserTarget": "hackbox-demo:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "hackbox-wavelength:build:production"
+              "browserTarget": "hackbox-demo:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "hackbox-wavelength:build"
+            "browserTarget": "hackbox-demo:build"
           }
         },
         "test": {
@@ -115,18 +115,18 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "hackbox-wavelength:serve"
+            "devServerTarget": "hackbox-demo:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "hackbox-wavelength:serve:production"
+              "devServerTarget": "hackbox-demo:serve:production"
             }
           }
         }
       }
     }
   },
-  "defaultProject": "hackbox-wavelength",
+  "defaultProject": "hackbox-demo",
   "cli": {
     "analytics": "8f3a58f5-4e53-40c7-9d26-9be2ac1ed7c8"
   }
