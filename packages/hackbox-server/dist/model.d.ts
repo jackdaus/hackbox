@@ -17,7 +17,16 @@ export declare class Room {
     socketId: string;
     maxPlayers: number;
     players: Player[];
+    private activeGame;
     constructor(id: string, socketId: string, maxPlayers: number);
+    getPlayer(playerId: string): Player;
+    initActiveGame(gameType: string): void;
+    getActiveGame(): ActiveGame;
+}
+export interface PlayerAction {
+    roomId: string;
+    playerId: string;
+    action: GameReferenceAction;
 }
 /**
  * The logic for the games running on the hackboxServer.
@@ -40,6 +49,12 @@ export interface GameReferenceDemo {
  */
 export interface GameReferenceAction {
     actionName: string;
+    value: string;
     threshold: number;
+}
+/**
+ * Root interface for all game types.
+ */
+export interface ActiveGame {
 }
 //# sourceMappingURL=model.d.ts.map

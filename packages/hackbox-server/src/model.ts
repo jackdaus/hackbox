@@ -1,3 +1,5 @@
+import { FrequencyGame } from "./frequencyGame";
+
 /**
  * A player of a hackbox game.
  */
@@ -20,6 +22,7 @@ export class Player {
  */
 export class Room {
     players: Player[];
+    private activeGame!: ActiveGame;
 
     constructor(
         public id: string,
@@ -28,6 +31,38 @@ export class Room {
     ) {
         this.players = [];
     }
+
+    getPlayer(playerId: string): Player {
+        const player = this.players.find(player => {
+            return player.id == playerId;
+        });
+
+        if(player == null) {
+            throw Error('Player not found.');
+        }
+
+        return player;
+    }
+
+    initActiveGame(gameType: string) {
+        switch(gameType) {
+            case 'frequency':
+                this.activeGame = new FrequencyGame(this.players);
+                break;
+            default:
+                throw Error('Game type not found.');
+        }
+    }
+
+    getActiveGame(): ActiveGame {
+        return this.activeGame;
+    }
+}
+
+export interface PlayerAction {
+    roomId: string;
+    playerId: string;
+    action: GameReferenceAction;
 }
 
 /**
@@ -53,5 +88,13 @@ export interface GameReferenceDemo {
  */
 export interface GameReferenceAction {
     actionName: string;
+    value: string;
     threshold: number;
+}
+
+/**
+ * Root interface for all game types.
+ */
+export interface ActiveGame {
+
 }

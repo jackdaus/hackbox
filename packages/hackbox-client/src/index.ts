@@ -77,4 +77,12 @@ export class hackboxClient {
       callbackFn(gameType);
     });
   };
+
+  emitPlayerAction(roomId: string, playerId: string, action: any) {
+    this.socket.emit('hb-playerAction', { roomId, playerId, action })
+  }
+
+  onGameEvent() {
+    
+  }
 };

@@ -2,7 +2,8 @@ import { Server, Socket }from 'socket.io';
 
 import { generateId }  from './utils';
 import { RoomManager } from './roomManager';
-import { GameReference, Player } from './model';
+import { GameReference, Player, PlayerAction } from './model';
+import { FrequencyGame, FrequencyPlayer } from './frequencyGame';
 
 const roomManager = new RoomManager();
 
@@ -22,6 +23,8 @@ export function attachListeners (io: Server, gameReference: GameReference): void
       const id = generateId();
       socket.join(id);
       const room = roomManager.addRoom(id, socket.id, 8);
+      //TODO: pass game type when creating room
+      room.initActiveGame('frequency');
       io.to(id).emit('hb-roomData', room);
     });
 
@@ -38,20 +41,55 @@ export function attachListeners (io: Server, gameReference: GameReference): void
 
     socket.on('hb-startGame', ({ roomId, gameType }) => {
       const players = roomManager.getPlayers(roomId);
-
+      const room = roomManager.getRoom(roomId);
+      //todo: don't think we need to send to each player indivudally... we could just send to room
       players.forEach(player => {
         io.to(player.socketId).emit('hb-gameStart', gameType);
       });
 
+      switch (gameType) {
+        case 'frequency':
+          room.initActiveGame(gameType);
+          let freqGame = <FrequencyGame>room.getActiveGame();
+          let {id, name} = freqGame.getLeader()
+          // let leaderPlayer = room.getPlayer(id);
+          io.to(room.socketId).emit('freq-gameLeader', {id, name});
+
+          // Player has 15s to enter hint
+          setTimeout(() => {
+            let clue = freqGame.getClueWord();
+            io.to(room.socketId).emit('freq-clueWord', clue);
+          }, 15000);
+
+          // Players have 15s to make their guess. Afterwhich
+          setTimeout(() => {
+            io.to(room.socketId).emit('freq-guessingOver');
+            let freqPlayers = freqGame.getFreqPlayers();
+            io.to(room.id).emit('freq-roundResults', freqPlayers, freqGame.targetFrequency);
+            //TODO: add points
+          }, 30000);
+
+          break;
+        default:
+          break;
+      }
+
       //todo: emit hb-gameStart to room-manager room. Would be nice to have the roomId sent as well
 
-      setTimeout(() => {
-        const players = roomManager.getPlayers(roomId);
 
-        players.forEach(player => {
-          io.to(player.socketId).emit('hb-gameOver');
-        });
-      }, gameReference.demo.gameLength);
+      // setTimeout(() => {
+      //   const players = roomManager.getPlayers(roomId);
+
+      //   players.forEach(player => {
+      //     io.to(player.socketId).emit('hb-gameOver');
+      //   });
+      // }, gameReference.demo.gameLength);
+    });
+
+    socket.on('freq-setClueWord', ({roomId, clueWord}) => {
+      let room = roomManager.getRoom(roomId);
+      let freqGame = <FrequencyGame>room.getActiveGame();
+      freqGame.clueWord = clueWord;
     });
 
     /**
@@ -101,15 +139,24 @@ export function attachListeners (io: Server, gameReference: GameReference): void
       io.to(room.socketId).emit('hb-update', room);
     });
 
-    socket.on('hb-playerAction', data => {
-      const room = roomManager.getRoom(data.id);
+    socket.on('hb-playerAction', (playerAction: PlayerAction) => {
+      const room = roomManager.getRoom(playerAction.roomId);
+      const frequencyGame = (<FrequencyGame>room.getActiveGame());
+      const frequencyPlayer = frequencyGame.getPlayer(playerAction.playerId);
 
-      switch (data.gameType) {
-        case 'squatRace':
-          if (data.actionType === 'squat') {
-            roomManager.addToPlayerScore(data.id, data.playerId, 1);
-            io.to(room.socketId).emit('hb-updateData', room);
+      switch (playerAction.action.actionName) {
+        case 'act-setClueWord':
+          frequencyGame.clueWord = playerAction.action.value;
+          io.to(room.socketId).emit('act-setClueWord', playerAction)
+          break;
+        case 'act-updateFreqGuess':
+          if (frequencyPlayer) {
+            frequencyPlayer.freqGuess = parseInt(playerAction.action.value);
+            io.to(room.socketId).emit('act-updateFreqGuess', playerAction);
           }
+          break;
+        case 'act-setFreqGuess':
+    
           break;
         default:
           break;

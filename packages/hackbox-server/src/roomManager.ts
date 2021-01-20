@@ -1,4 +1,4 @@
-import { Player, Room} from './model';
+import { ActiveGame, Player, Room} from './model';
 
 export class RoomManager {
   private rooms: Room[];

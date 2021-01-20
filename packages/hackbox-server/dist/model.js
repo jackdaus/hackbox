@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Room = exports.Player = void 0;
+var frequencyGame_1 = require("./frequencyGame");
 /**
  * A player of a hackbox game.
  */
@@ -25,6 +26,27 @@ var Room = /** @class */ (function () {
         this.maxPlayers = maxPlayers;
         this.players = [];
     }
+    Room.prototype.getPlayer = function (playerId) {
+        var player = this.players.find(function (player) {
+            return player.id == playerId;
+        });
+        if (player == null) {
+            throw Error('Player not found.');
+        }
+        return player;
+    };
+    Room.prototype.initActiveGame = function (gameType) {
+        switch (gameType) {
+            case 'frequency':
+                this.activeGame = new frequencyGame_1.FrequencyGame(this.players);
+                break;
+            default:
+                throw Error('Game type not found.');
+        }
+    };
+    Room.prototype.getActiveGame = function () {
+        return this.activeGame;
+    };
     return Room;
 }());
 exports.Room = Room;
