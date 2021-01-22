@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { GameFrequencyComponent } from './game-types/game-frequency/game-frequency.component';
+import { FrequencyBoardComponent } from './game-types/frequency/frequency-board/frequency-board.component';
+import { FrequencyControllerComponent } from './game-types/frequency/frequency-controller/frequency-controller.component';
 import { JoinRoomComponent } from './join-room/join-room.component';
 import { RoomHostComponent } from './room-host/room-host.component';
 import { RoomManagerComponent } from './room-manager/room-manager.component';
@@ -17,7 +18,13 @@ const routes: Routes = [
     },
     {
         path: 'room-host/:roomId',
-        component: RoomHostComponent
+        component: RoomHostComponent,
+        children: [
+            {
+                path: 'frequency',
+                component: FrequencyBoardComponent
+            }
+        ]
     },
     {
         path: 'waiting-lobby/:roomId',
@@ -28,7 +35,7 @@ const routes: Routes = [
         children: [
             {
                 path: 'frequency',
-                component: GameFrequencyComponent
+                component: FrequencyControllerComponent
             },
         ]
     }

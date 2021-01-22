@@ -5,11 +5,11 @@ import { HackboxClientService } from 'src/app/shared/hackbox-client.service';
 import { SharedService } from 'src/app/shared/shared.service';
 
 @Component({
-  selector: 'app-game-frequency',
-  templateUrl: './game-frequency.component.html',
-  styleUrls: ['./game-frequency.component.scss']
+  selector: 'app-frequency-controller',
+  templateUrl: './frequency-controller.component.html',
+  styleUrls: ['./frequency-controller.component.scss']
 })
-export class GameFrequencyComponent implements OnInit {
+export class FrequencyControllerComponent implements OnInit {
 
   freq: number = 90;
 

@@ -1,6 +1,6 @@
 <div fxLayout="row" fxLayoutAlign="space-between" class="heading">
   <h2>Host a game</h2>
-  <button mat-stroked-button color="primary" *ngIf="!room" (click)="createRoom()">
+  <button mat-stroked-button color="primary" *ngIf="!room" (click)="clickCreateRoom()">
       <mat-icon>add</mat-icon>
       Create Room
   </button>
@@ -13,7 +13,7 @@
               <p>Room Id: {{ room ? room?.id : 'N/A' }}</p>
           </div>
           <div>
-              <p>Game Type: Test</p>
+              <p>Game Type: Frequency</p>
           </div>
           <div>
               Players ({{ room?.players?.length }}/{{ room?.maxPlayers }}):
@@ -26,10 +26,11 @@
       </div>
 
       <div>
-          <button mat-stroked-button color="primary" [disabled]="room && room.players && !(room.players.length > 1)" (click)="startGame()">
+          <button mat-stroked-button color="primary" [disabled]="room && room.players && !(room.players.length > 1)" (click)="clickStartGame()">
               <mat-icon>play_arrow</mat-icon>
               Start Game
           </button>
       </div>
   </div>
 </mat-card>
+<router-outlet></router-outlet>

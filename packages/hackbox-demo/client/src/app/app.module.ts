@@ -17,8 +17,9 @@ import { JoinRoomComponent } from './join-room/join-room.component';
 import { RoomManagerComponent } from './room-manager/room-manager.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { WaitingLobbyComponent } from './waiting-lobby/waiting-lobby.component';
-import { GameFrequencyComponent } from './game-types/game-frequency/game-frequency.component';
 import { RoomHostComponent } from './room-host/room-host.component';
+import { FrequencyControllerComponent } from './game-types/frequency/frequency-controller/frequency-controller.component';
+import { FrequencyBoardComponent } from './game-types/frequency/frequency-board/frequency-board.component';
 
 @NgModule({
   declarations: [
@@ -26,8 +27,9 @@ import { RoomHostComponent } from './room-host/room-host.component';
     JoinRoomComponent,
     RoomManagerComponent,
     WaitingLobbyComponent,
-    GameFrequencyComponent,
+    FrequencyControllerComponent,
     RoomHostComponent,
+    FrequencyBoardComponent,
   ],
   imports: [
     BrowserModule,
