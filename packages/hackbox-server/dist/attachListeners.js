@@ -52,13 +52,20 @@ function attachListeners(io, gameReference) {
                     // Player has 15s to enter hint
                     setTimeout(function () {
                         var clue = freqGame_1.getClueWord();
-                        io.to(room.socketId).emit('freq-clueWord', clue);
+                        var gameEvent = {
+                            eventName: 'freq-clueWord',
+                            value: clue
+                        };
+                        io.to(room.socketId).emit('hb-gameEvent', gameEvent);
                     }, 15000);
                     // Players have 15s to make their guess. Afterwhich
                     setTimeout(function () {
-                        io.to(room.socketId).emit('freq-guessingOver');
                         var freqPlayers = freqGame_1.getFreqPlayers();
-                        io.to(room.id).emit('freq-roundResults', freqPlayers, freqGame_1.targetFrequency);
+                        var roundResults = {
+                            eventName: 'freq-roundResults',
+                            value: { freqPlayers: freqPlayers, targetFrequency: freqGame_1.targetFrequency }
+                        };
+                        io.to(room.id).emit('hb-gameEvent', roundResults);
                         //TODO: add points
                     }, 30000);
                     break;
@@ -72,12 +79,6 @@ function attachListeners(io, gameReference) {
             //     io.to(player.socketId).emit('hb-gameOver');
             //   });
             // }, gameReference.demo.gameLength);
-        });
-        socket.on('freq-setClueWord', function (_a) {
-            var roomId = _a.roomId, clueWord = _a.clueWord;
-            var room = roomManager.getRoom(roomId);
-            var freqGame = room.getActiveGame();
-            freqGame.clueWord = clueWord;
         });
         /**
          * When this endpoint is called, it will add the socket to the game-managment io room.
@@ -125,12 +126,12 @@ function attachListeners(io, gameReference) {
             switch (playerAction.action.actionName) {
                 case 'act-setClueWord':
                     frequencyGame.clueWord = playerAction.action.value;
-                    io.to(room.socketId).emit('act-setClueWord', playerAction);
+                    io.to(room.socketId).emit('hb-playerAction', playerAction);
                     break;
                 case 'act-updateFreqGuess':
                     if (frequencyPlayer) {
                         frequencyPlayer.freqGuess = parseInt(playerAction.action.value);
-                        io.to(room.socketId).emit('act-updateFreqGuess', playerAction);
+                        io.to(room.socketId).emit('hb-playerAction', playerAction);
                     }
                     break;
                 case 'act-setFreqGuess':

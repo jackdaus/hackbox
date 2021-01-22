@@ -1,6 +1,6 @@
 import { Socket } from 'socket.io-client';
 import { Room } from 'hackbox-server';
-import { PlayerAction } from 'hackbox-server/dist/model';
+import { PlayerAction, GameEvent } from 'hackbox-server/dist/model';
 export declare class hackboxClient {
     socket: Socket;
     constructor(url: string);
@@ -38,6 +38,6 @@ export declare class hackboxClient {
      */
     onStartGame(callbackFn: (gameType: string) => void): void;
     emitPlayerAction(action: PlayerAction): void;
-    onGameEvent(): void;
+    onGameEvent(callbackFn: (gameEvent: GameEvent) => void): void;
 }
 //# sourceMappingURL=index.d.ts.map

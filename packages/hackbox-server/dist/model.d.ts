@@ -57,4 +57,11 @@ export interface GameReferenceAction {
  */
 export interface ActiveGame {
 }
+/**
+ * Emits on hb-gameEvent.
+ */
+export interface GameEvent {
+    eventName: string;
+    value?: any;
+}
 //# sourceMappingURL=model.d.ts.map

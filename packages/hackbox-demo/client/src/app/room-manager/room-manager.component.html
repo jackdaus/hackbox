@@ -1,9 +1,5 @@
 <div fxLayout="row" fxLayoutAlign="space-between" class="heading">
     <h2>Room manager</h2>
-    <button mat-stroked-button color="primary" (click)="createRoom()">
-        <mat-icon>add</mat-icon>
-        Create Room
-    </button>
 </div>
 
 <mat-card class="room-card" *ngFor="let room of rooms">
@@ -23,13 +19,6 @@
                     </li>
                 </ul>
             </div>
-        </div>
-
-        <div>
-            <button mat-stroked-button color="primary" (click)="startGame(room.id)">
-                <mat-icon>play_arrow</mat-icon>
-                Start Game
-            </button>
         </div>
     </div>
 </mat-card>

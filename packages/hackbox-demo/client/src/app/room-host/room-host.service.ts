@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { hackboxClient } from 'hackbox-client';
-import { Room } from 'hackbox-server';
+import { Room, GameEvent } from 'hackbox-server/dist/model';
 import { ReplaySubject } from 'rxjs';
 
 @Injectable({
@@ -21,6 +21,11 @@ export class RoomHostService {
 
     this.hackboxClient.onPlayerJoin((updatedRoom: Room) => {
       this.room$.next(updatedRoom)
+    });
+
+    this.hackboxClient.onGameEvent((gameEvent: GameEvent) => {
+      //TODO: switch statement to handle different game events
+      console.log(gameEvent)
     });
   }
 

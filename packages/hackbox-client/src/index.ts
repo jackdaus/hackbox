@@ -1,6 +1,6 @@
 import { Socket, io } from 'socket.io-client';
 import { Room } from 'hackbox-server';
-import { PlayerAction } from 'hackbox-server/dist/model';
+import { PlayerAction, GameEvent } from 'hackbox-server/dist/model';
 
 export class hackboxClient {
   socket: Socket;
@@ -83,7 +83,9 @@ export class hackboxClient {
     this.socket.emit('hb-playerAction', action)
   }
 
-  onGameEvent() {
-
-  }
+  onGameEvent(callbackFn: (gameEvent: GameEvent) => void): void {
+    this.socket.on('hb-gameEvent', (gameEvent: GameEvent) => {
+      callbackFn(gameEvent);
+    });
+  };
 };
