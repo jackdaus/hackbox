@@ -78,6 +78,11 @@ var hackboxClient = /** @class */ (function () {
         });
     };
     ;
+    hackboxClient.prototype.emitPlayerAction = function (action) {
+        this.socket.emit('hb-playerAction', action);
+    };
+    hackboxClient.prototype.onGameEvent = function () {
+    };
     return hackboxClient;
 }());
 exports.hackboxClient = hackboxClient;

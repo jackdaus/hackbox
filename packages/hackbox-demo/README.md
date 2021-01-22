@@ -15,6 +15,6 @@ First, install the npm packages for the server. Navigate into client directory a
 ### `npm install`
 
 Run the angular application with this command
-### `ng serve
+### `ng serve`
 
 The application is now live on http://localhost:4200

@@ -1,5 +1,6 @@
 import { Socket } from 'socket.io-client';
 import { Room } from 'hackbox-server';
+import { PlayerAction } from 'hackbox-server/dist/model';
 export declare class hackboxClient {
     socket: Socket;
     constructor(url: string);
@@ -36,5 +37,7 @@ export declare class hackboxClient {
      * @param callbackFn callback function when a player joins. The game type is a parameter of the callback function.
      */
     onStartGame(callbackFn: (gameType: string) => void): void;
+    emitPlayerAction(action: PlayerAction): void;
+    onGameEvent(): void;
 }
 //# sourceMappingURL=index.d.ts.map

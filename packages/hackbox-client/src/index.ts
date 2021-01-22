@@ -1,5 +1,6 @@
 import { Socket, io } from 'socket.io-client';
 import { Room } from 'hackbox-server';
+import { PlayerAction } from 'hackbox-server/dist/model';
 
 export class hackboxClient {
   socket: Socket;
@@ -78,11 +79,11 @@ export class hackboxClient {
     });
   };
 
-  emitPlayerAction(roomId: string, playerId: string, action: any) {
-    this.socket.emit('hb-playerAction', { roomId, playerId, action })
+  emitPlayerAction(action: PlayerAction) {
+    this.socket.emit('hb-playerAction', action)
   }
 
   onGameEvent() {
-    
+
   }
 };

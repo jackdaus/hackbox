@@ -18,6 +18,7 @@ import { RoomManagerComponent } from './room-manager/room-manager.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { WaitingLobbyComponent } from './waiting-lobby/waiting-lobby.component';
 import { GameFrequencyComponent } from './game-types/game-frequency/game-frequency.component';
+import { RoomHostComponent } from './room-host/room-host.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { GameFrequencyComponent } from './game-types/game-frequency/game-frequen
     RoomManagerComponent,
     WaitingLobbyComponent,
     GameFrequencyComponent,
+    RoomHostComponent,
   ],
   imports: [
     BrowserModule,

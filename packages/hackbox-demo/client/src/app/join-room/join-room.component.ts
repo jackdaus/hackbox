@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators} from '@angular/forms';
 import { Router } from '@angular/router';
 
 import { HackboxClientService } from '../shared/hackbox-client.service';
+import { SharedService } from '../shared/shared.service';
 
 @Component({
 	selector: 'app-join-room',
@@ -18,6 +19,7 @@ export class JoinRoomComponent implements OnInit {
 	constructor(
 		private router: Router,
 		private hackboxClientService: HackboxClientService,
+		private sharedService: SharedService,
 	) { } 
 
 	ngOnInit(): void {
@@ -28,6 +30,8 @@ export class JoinRoomComponent implements OnInit {
 		const roomCodeInput: string= this.joinGameForm.value['roomCode'];
 		const playerId = await this.hackboxClientService.getHackboxClient().joinRoom(roomCodeInput, nameInput);
 		console.log(playerId)
+		this.sharedService.roomId = roomCodeInput;
+		this.sharedService.playerId = playerId;
 		
 		this.router.navigate(['waiting-lobby', roomCodeInput, { name: nameInput }]);
 		
