@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Room } from 'hackbox-server';
+import { Player, Room } from 'hackbox-server';
 import { RoomHostService } from 'src/app/room-host/room-host.service';
 
 @Component({
@@ -10,6 +10,9 @@ import { RoomHostService } from 'src/app/room-host/room-host.service';
 export class FrequencyBoardComponent implements OnInit {
 
   room!: Room;
+  leader!: Player;
+  leftWord: string = '';
+  rightWord: string = '';
   
   constructor(
     private roomHostService: RoomHostService,
@@ -18,6 +21,18 @@ export class FrequencyBoardComponent implements OnInit {
   ngOnInit(): void {
     this.roomHostService.room$.subscribe((room: Room) => {
       this.room = room;
+    });
+
+    this.roomHostService.leftWord$.subscribe((word: string) => {
+      this.leftWord = word;
+    });
+
+    this.roomHostService.rightWord$.subscribe((word: string) => {
+      this.rightWord = word;
+    });
+
+    this.roomHostService.leader$.subscribe((player: Player) => {
+      this.leader = player;
     });
   }
 

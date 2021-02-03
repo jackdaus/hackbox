@@ -3,12 +3,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.FrequencyPlayer = exports.FrequencyGame = void 0;
 var FrequencyGame = /** @class */ (function () {
     function FrequencyGame(players) {
-        this.leftWord = '';
-        this.rightWord = '';
         this.targetFrequency = 0;
         this.clueWord = '';
         this.freqPlayers = this.initFreqPlayers(players);
         this.leaderIndex = 0;
+        //TODO: randomly select a pair of words on some dimension
+        this.leftWord = 'Hot';
+        this.rightWord = 'Cold';
     }
     FrequencyGame.prototype.getPlayer = function (playerId) {
         return this.freqPlayers.find(function (player) { return player.id == playerId; });

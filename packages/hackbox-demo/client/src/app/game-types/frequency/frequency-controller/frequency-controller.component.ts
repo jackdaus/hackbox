@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { MatSliderChange } from '@angular/material/slider';
 import { GameReferenceAction, PlayerAction } from 'hackbox-server/dist/model';
 import { HackboxClientService } from 'src/app/shared/hackbox-client.service';
@@ -12,6 +12,9 @@ import { SharedService } from 'src/app/shared/shared.service';
 export class FrequencyControllerComponent implements OnInit {
 
   freq: number = 90;
+  @Input() leftWord: string = '';
+  @Input() rightWord: string = '';
+  @Input() showSlider: boolean = true;
 
   constructor(
     private hackboxClientService: HackboxClientService,

@@ -1,2 +1,19 @@
-<p>frequency-board works!</p>
-{{room?.id}}
+
+<!-- <br>
+leftWord: {{leftWord}}
+<br>
+rightWord: {{rightWord}} -->
+<app-frequency-controller 
+  [leftWord]="leftWord" 
+  [rightWord]="rightWord"
+  [showSlider]="false">
+</app-frequency-controller>
+
+<!-- <br>
+leftWord: {{leftWord}}
+<br>
+rightWord: {{rightWord}} -->
+
+RoomId: {{room?.id}}
+<br>
+Leader: {{leader.name}}

@@ -46,12 +46,25 @@ function attachListeners(io, gameReference) {
                 case 'frequency':
                     room.initActiveGame(gameType);
                     var freqGame_1 = room.getActiveGame();
-                    var _b = freqGame_1.getLeader(), id = _b.id, name_1 = _b.name;
-                    // let leaderPlayer = room.getPlayer(id);
-                    io.to(room.socketId).emit('freq-gameLeader', { id: id, name: name_1 });
-                    // Player has 15s to enter hint
+                    // Send round setup info to all users
+                    var leaderId = freqGame_1.getLeader().id;
+                    var leaderPlayer = room.getPlayer(leaderId);
+                    var roundSetup = {
+                        eventName: 'freq-roundSetup',
+                        value: { leaderPlayer: leaderPlayer, leftWord: freqGame_1.leftWord, rightWord: freqGame_1.rightWord }
+                    };
+                    io.to(room.socketId).emit('hb-gameEvent', roundSetup);
+                    // Send the target freq to only the leader
+                    freqGame_1.targetFrequency = Math.floor(Math.random() * 180);
+                    var targetFreq = {
+                        eventName: 'freq-targetFreq',
+                        value: freqGame_1.targetFrequency,
+                    };
+                    io.to(leaderPlayer.socketId).emit('hb-gameEvent', targetFreq);
+                    // Leader has 15s to enter hint
                     setTimeout(function () {
                         var clue = freqGame_1.getClueWord();
+                        //todo: remove sending the clue word here. It should only be sent below when leader submits the word
                         var gameEvent = {
                             eventName: 'freq-clueWord',
                             value: clue

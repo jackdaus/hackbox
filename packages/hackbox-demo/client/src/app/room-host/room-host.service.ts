@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { hackboxClient } from 'hackbox-client';
-import { Room, GameEvent } from 'hackbox-server/dist/model';
-import { ReplaySubject } from 'rxjs';
+import { Room, GameEvent, Player } from 'hackbox-server/dist/model';
+import { ReplaySubject, Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -9,6 +9,10 @@ import { ReplaySubject } from 'rxjs';
 export class RoomHostService {
 
   hackboxClient: hackboxClient;
+
+  leader$ = new Subject<Player>();
+  leftWord$ = new Subject<string>();
+  rightWord$ = new Subject<string>();
   
   /**
    * ReplaySubject will give the most recent value to new subscribers
@@ -24,7 +28,18 @@ export class RoomHostService {
     });
 
     this.hackboxClient.onGameEvent((gameEvent: GameEvent) => {
-      //TODO: switch statement to handle different game events
+      switch(gameEvent.eventName) {
+        case 'freq-roundSetup':
+          console.log('round setup in hot service hit')
+          this.leader$.next(gameEvent.value.leaderPlayer)
+          this.leftWord$.next(gameEvent.value.leftWord);
+          this.rightWord$.next(gameEvent.value.rightWord);
+          break;
+        case 'freq-targetFreq':
+          break;
+        default:
+      } 
+
       console.log(gameEvent)
     });
   }

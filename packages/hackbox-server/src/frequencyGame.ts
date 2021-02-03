@@ -14,12 +14,14 @@ export class FrequencyGame implements ActiveGame {
   constructor(
     players: Player[]
   ) { 
-    this.leftWord = '';
-    this.rightWord = '';
     this.targetFrequency = 0;
     this.clueWord = '';
     this.freqPlayers = this.initFreqPlayers(players);
     this.leaderIndex = 0;
+
+    //TODO: randomly select a pair of words on some dimension
+    this.leftWord = 'Hot';
+    this.rightWord = 'Cold';
   }
 
   getPlayer(playerId: string): FrequencyPlayer | undefined {

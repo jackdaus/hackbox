@@ -4,10 +4,12 @@
   padding-right: 1em;
 }
 
-.slider-container {
-  margin-left: .5em;
-  margin-right: .5em;
-}
 .smooth-transition {
   transition-duration: .5s;
+}
+
+.edge-word {
+  display: flex;
+  align-items: center;
+  padding: 1rem;
 }
